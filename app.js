@@ -3,17 +3,27 @@ var fs = require('fs');
 
 // const renderer = require('./lib/htmlrender');
 
-
-
-
-
   function getUserInput (data) {
+
+  let arr = ['test1','test2', 
+];
   console.log('Please read each question carefully before submitting your response. Enjoy!')
   inquirer.prompt([
     {
       type:'input',
-      name: 'Team_Member',
-      message: 'What is the team member\'s name?', 
+      name: 'first_name',
+      message: 'What is the employee\'s first name?', 
+      validate: function(text) {
+        if (text === "") {
+          return 'Field must not be empty.'
+        }
+        return true;
+      }
+    },
+    {
+      type:'input',
+      name: 'last_name',
+      message: 'What is the employee\'s last name?', 
       validate: function(text) {
         if (text === "") {
           return 'Field must not be empty.'
@@ -23,100 +33,9 @@ var fs = require('fs');
     },
     {
       type: 'list',
-      name: 'Team_Role',
-      choices: ['Manager', 'Intern', 'Engineer']
+      name: 'title',
+      choices: arr
     },
-    {
-      type: 'input',
-      name: 'School',
-      when: function (answers) {
-        return answers.Team_Role === 'Intern'; 
-      },
-      message: 'What University did they attend?',
-    },
-    { 
-      type: 'input',
-      name: 'Git',
-      when: function (answers) {
-        return answers.Team_Role === 'Engineer'; 
-      },
-      message: 'What is the team member\'s Github Repo URL?',
-      validate: function(text) {
-        if (text === "") {
-          return 'Field must not be empty.'
-        }
-        return true;
-      }
-    },
-    {
-      type: 'input',
-      name: 'Phone_Number',
-      when: function (answers) {
-        return answers.Team_Role === 'Manager'; 
-      },
-      message: 'What is the Manager\'s phone number?',
-      validate: function(text) {
-        if (text === "") {
-          return 'Field must not be empty.'
-        }
-        return true;
-      }
-    },
-    {
-    type:'input',
-    name: 'Employee_Id',
-    message: 'What is the team member\'s Employee ID Number?', 
-    validate: function(text) {
-      if (text === "") {
-        return 'Field must not be empty.'
-      }
-      return true;
-      }
-    },
-    {
-      type:'input',
-      name: 'Email',
-      message: 'What is the team member\'s E-Mail Address?', 
-      validate: function(text) {
-        if (text === "") {
-          return 'Field must not be empty.'
-        }
-        return true;
-      }
-    },
-    {
-      type:'input',
-      name: 'Facebook',
-      message: 'What is the team member\'s Facebook URL?', 
-      validate: function(text) {
-        if (text === "") {
-          return 'Field must not be empty.'
-        }
-        return true;
-      }
-    },
-    {
-      type:'input',
-      name: 'Twitter',
-      message: 'What is the team member\'s Twitter URL?', 
-      validate: function(text) {
-        if (text === "") {
-          return 'Field must not be empty.'
-        }
-        return true;
-      }
-    },
-    {
-      type:'input',
-      name: 'LinkedIn',
-      message: 'What is the team member\'s LinkedIn URL?', 
-      validate: function(text) {
-        if (text === "") {
-          return 'Field must not be empty.'
-        }
-        return true;  
-      }
-    }
   ])
     .then(function(answers)  {
         console.log('Here are your answers: ', answers); 
